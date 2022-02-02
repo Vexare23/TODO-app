@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+            TODO app =)
+        {% endblock %}
+    </title>
+
+    <style>
+        main{
+            width: 90vw;
+            margin: 0 auto;
+            height: 100%;
+            padding: 30px 20px;
+            min-height: calc(100vh - 80px - 168px);
+        }
+        header{
+            background: #333;
+        }
+        .navbar > div{
+            padding: 10px;
+            margin-bottom: auto;
+            grid-auto-rows: minmax(50px, auto);
+        }
+        .nav_home{
+            align-self: start;
+            justify-self: center;
+        }
+        .nav_buttons{
+            align-self: start;
+            justify-self: center;
+        }
+    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Spartan&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href={{ asset('css/bootstrap.css') }}>
+    <link rel="stylesheet" href={{ asset('css/bootstrap-responsive.css') }}>
+    <link rel="stylesheet" href={{ asset('css/font-awesome.css') }}>
+    <link rel="stylesheet" href={{ asset('css/app.css') }}>
+    {% block stylesheets %}
+    {% endblock %}
+
+    {% block javascripts %}
+
+    {% endblock %}
+
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav_home">
+                    <a class="navbar-link" href="{{path('homepage')}}">
+                        <p class="pl-2 d-inline font-weight-bold" style="color: #fff; font-size: 20px;">TODO app</p>
+                    </a>
+                </div>
+            <div class="nav_buttons">
+                {% if is_granted('ROLE_USER') %}
+                    <div>
+                        <a id="tag-Username" class="logged_in_as" style="color: whitesmoke; font-size: 15px;">Logged in as: {{  app.user.firstName }} {{ app.user.lastName }}</a>
+                        <a id="button-Logout" class="btn btn-primary" href="{{ path('app_logout') }}">Log Out</a>
+                    </div>
+                {% else %}
+                    <div>
+                        Not logged in
+                        <a id="button-Login" class="btn btn-primary" href="{{ path('app_login') }}">Log In</a>
+                        <a id="button-Signup" href="{{ path('app_register') }}" class="btn btn-dark">Sign up</a>
+                    </div>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        {% for message in app.flashes('failed') %}
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% block body %}
+        {% endblock %}
+    </main>
+
+    <footer class="mt-5 p-3 text-center footer">
+        <p>Made by Keep Getting Better #RomaniaTeam =)</p>
+        <script> document.write(new Date().getFullYear());</script>
+    </footer>
+</body>
+</html>

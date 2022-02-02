@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reset your password{% endblock %}
+
+{% block body %}
+
+
+    {{ form_start(resetForm, {
+        attr: { class: 'form1' }
+    }) }}
+         <h1>Reset your password</h1>
+        {{ form_row(resetForm.plainPassword) }}
+        <button class="btn btn-question">Reset password</button>
+    {{ form_end(resetForm) }}
+{% endblock %}

@@ -1,0 +1,26 @@
+ {% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+    <br>
+    {{ form_start(TODOForm, {
+        attr: { class: 'form1'}
+    }) }}
+    <h1> Edit current TODO</h1>
+    {{ form_row(TODOForm.name) }}
+
+    {{ form_row(TODOForm.description) }}
+
+    {% if is_granted('ROLE_ADMIN') %}
+        {{ form_row(TODOForm.datetime) }}
+        {{ form_row(TODOForm.status) }}
+    {% endif %}
+
+    {{ form_row(TODOForm.assignedTo) }}
+
+    <button type="submit" class="btn btn-question">Save</button>
+
+    {{ form_end(TODOForm) }}
+
+{% endblock %}

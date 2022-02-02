@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} TODO  {% endblock %}
+
+{% block body %}
+    <div style="box-shadow: 2px 3px 9px 4px rgba(0,0,0,0.04);">
+    <table class="table_TODO">
+        <tbody>
+            <tr>
+                <th>
+                    <center>ID</center></th>
+                <th>
+                    <center>To be done by</center>
+                </th>
+                <th>
+                    <center>TODO name</center>
+                </th>
+                <th>
+                    <center>Description</center>
+                </th>
+                <th>
+                    <center>Assigned to</center>
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    <center>{{ TODO.id }}</center>
+                </th>
+                <th>
+                    <center>{{  TODO.datetime|date('d-m-Y H:i') }}</center></th>
+                <th>
+                    <center>{{ TODO.name }}</center>
+                </th>
+                <th>
+                    <center>{{ TODO.description }}</center>
+                </th>
+                <th>
+                    <center>
+                        {% if not TODO.assignedTo %}
+                            <center>
+                                Nobody
+                            </center>
+                        {% else %}
+                            <center><strong>{{  TODO.assignedTo.firstName }} {{ TODO.assignedTo.lastName }}</strong>
+                                <br><strong>{{ TODO.assignedTo.email }}</strong>
+                            </center>
+                        {% endif %}
+                    </center>
+                </th>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+    <script>
+        function myFunction(button){
+            location.href = "{{ path('TODOAsDone',{ id: TODO.id }) }}";
+        }
+    </script>
+    <br>
+    <br>
+    {% if TODO.status == false and TODO.assignedTo and app.user.email == TODO.assignedTo.email%}
+        <button type="button" class="btn btn-question" onclick="myFunction(this)">Mark TODO as DONE </button>
+    {% endif %}
+
+{% endblock %}

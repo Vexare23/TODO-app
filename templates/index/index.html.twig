@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% if is_granted('ROLE_USER') %}
+        <div class="topnav">
+            <a id="createTodo" class="createTodo" href="{{path('new_TODO')}}">
+                <p style="color: #000000; font-size: 20px;">Create TODO</p>
+            </a>
+            <a id="isOpen" href="{{ path('homepage', {'status': 'open'}) }}">
+                <p style="color: #FFFFFF; font-size: 20px;">Opened</p>
+            </a>
+            <a id="isDone" href="{{ path('homepage', {'status': 'done'}) }}">
+                <p style="color: #FFFFFF; font-size: 20px;">Done</p>
+            </a>
+        </div>
+        <div style="box-shadow: 2px 3px 9px 4px rgba(0,0,0,0.04);">
+            <div class="q-container-show p-4">
+                <div class="row">
+                    <table class="table_TODO">
+                        <tbody>
+                            <tr>
+                                <th>
+                                    <center>ID:</center>
+                                </th>
+                                <th>
+                                    <center>To be done by:</center>
+                                </th>
+                                <th>
+                                    <center>TODO name:</center>
+                                </th>
+                                <th>
+                                    <center>Assigned to:</center>
+                                </th>
+                                <th>&nbsp</th>
+                            </tr>
+                            {% for TODO in TODOs %}
+                                <tr>
+                                    <th id="todoId_{{ TODO.id }}">
+                                        <center>
+                                            {{ TODO.id }}
+                                        </center>
+                                    </th>
+                                    <th id="todo_datetime_{{ TODO.id }}">
+                                        <center>
+                                            {{  TODO.datetime|date('d-m-Y H:i') }}
+                                        </center></th>
+                                    <th id="todo_name_{{ TODO.id }}">
+                                        <center>
+                                            <a style="color: whitesmoke" href="{{path('TODO_show',{ id: TODO.id })}}">
+                                                <p >{{ TODO.name }}</p>
+                                            </a>
+                                        </center>
+                                    </th>
+                                    <th id="todo_assigned_{{ TODO.id }}">
+                                        <center>
+                                            {% if not TODO.assignedTo %}
+                                                Nobody
+                                            {% else %}
+                                                <strong>
+                                                    {{  TODO.assignedTo.firstName }} {{ TODO.assignedTo.lastName }}
+                                                </strong>
+                                            {% endif %}
+                                        </center>
+                                    </th>
+                                    <th>
+                                    {% if TODO.status ==false %}
+                                            <a style="color: whitesmoke; padding-right: 10px" href="{{path('edit_TODO',{ id: TODO.id })}}">
+                                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                                            </a>
+
+                                            <a style="color: whitesmoke; padding-right: 10px" href="{{path('delete_TODO',{ id: TODO.id })}}">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                            </a>
+                                    {% endif %}
+                                        <a style="color: whitesmoke; padding-right: 10px" href="{{ path('app_record', { id: TODO.id }) }}">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                        <a id="button-exportcsv_{{ TODO.id }}" style="color: whitesmoke; padding-right: 10px" href="{{path('app_exportcsv',{ id: TODO.id })}}">
+                                            <i class="fa fa-arrow-circle-down"></i>
+                                        </a>
+                                    </th>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

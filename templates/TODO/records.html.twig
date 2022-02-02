@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Record {% endblock %}
+
+{% block body %}
+    <form class="form1">
+        <h1 id="h_record" style="color: whitesmoke">Record:</h1>
+        {% set incVal = 0 %}
+            {% for record in datas %}
+                <h3 style="padding-top: 15px">Action: {{ record.action }}</h3>
+                {% if record.name == null %}
+                {% else %}
+                    <h4 id="h_name_{% set incVal = incVal + 1 %}{{ incVal }}_{{ todo.id }}">Name: {{ record.name }}</h4>
+                {% endif %}
+
+                {% if record.description == null %}
+                {% else %}
+                    <h4 id="h_desc_{{ todo.id }}" >Description: {{ record.description }}</h4>
+                {% endif %}
+
+                {% if record.datetime == null %}
+                {% else %}
+                    <h4 id="h_datetime_{{ todo.id }}">To be done by: {{ record.datetime|date('d-m-Y H:i') }}</h4>
+                {% endif %}
+
+                {% if record.status == null %}
+                {% else %}
+                    <h4 id="h_status_{{ todo.id }}">Status: {{ record.status }}</h4>
+                {% endif %}
+            {% endfor %}
+    </form>
+{% endblock %}
+
