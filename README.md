@@ -10,7 +10,7 @@ This project is a TODO application that helps you organize your tasks:
 
 
 2) Set Up:
-   1) Clone the project: git clone git@gitlab.com:keepgettingbetter/coding-bootcamp/todo-app.git
+   1) Clone the project: git clone ;P
    2) Create containers with: docker-compose up -d
    3) In .env you should have all variables installed
    4) Create a database: docker-compose exec php-fpm bin/console doctrine:database:create
